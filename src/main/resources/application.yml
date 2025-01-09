@@ -1,0 +1,31 @@
+spring:
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:9092
+      group-id: notification-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  mail:
+    host: "smtp.gmail.com"
+    port: 587
+    username: "bacteria1071@gmail.com"
+    password: "aawykhmryliybuup"
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+        transport:
+          protocol: "smtp"
+        debug: true
+
+  cloud:
+    consul:
+      host: localhost
+      port: 8500
+
+user-service:
+  url: http://localhost:8080
