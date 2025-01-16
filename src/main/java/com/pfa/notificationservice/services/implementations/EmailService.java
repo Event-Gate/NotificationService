@@ -9,33 +9,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
-@Service
-@Slf4j
-@RequiredArgsConstructor
+@Service @RequiredArgsConstructor @Slf4j
 public class EmailService {
     private final JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String from;
 
-    public void sendEmail(String toEmail, String subject, String body) {
+    public void sendEmail(String to, String subject, String body) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(from);
-            message.setTo(toEmail);
+            message.setTo(to);
             message.setSubject(subject);
             message.setText(body);
 
             mailSender.send(message);
-            log.info("Email sent successfully to: {}", toEmail);
+            log.info("Email sent successfully to: {}", to);
         } catch (Exception e) {
-            log.error("Failed to send email to: {}", toEmail, e);
+            log.error("Failed to send email to: {}", to, e);
         }
     }
 
-    public void sendBulkEmails(Set<String> emails, String subject, String body) {
-        emails.parallelStream().forEach(email ->
-                sendEmail(email, subject, body)
+    public void sendBulkEmails(Set<String> recipients, String subject, String body) {
+        recipients.parallelStream().forEach(recipient ->
+                sendEmail(recipient, subject, body)
         );
     }
 }
