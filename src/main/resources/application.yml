@@ -1,11 +1,16 @@
 server:
-  port: 8082
+  port: 8085
 
 spring:
   application:
     name: NotificationService
   cloud:
     consul:
+      discovery:
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 10s
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: notification-service
       host: localhost
       port: 8500
     openfeign:
@@ -40,6 +45,3 @@ spring:
 
 jwt:
   secret: ${JWT_SECRET}
-
-user-service:
-  url: http://localhost:8080

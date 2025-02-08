@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Set;
 
-@FeignClient(name = "user-service", url = "${user-service.url}")
+@FeignClient(name = "user-service")
 public interface UserServiceClient {
     @GetMapping("/api/public/users/{sellerId}/followers")
     Set<String> getFollowers(@PathVariable String sellerId);
